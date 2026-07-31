@@ -1,7 +1,24 @@
 aid: osly
 name: Osly
-description: Osly is a company surfaced as a portfolio company of 500-global and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: Osly is an AI workflow automation platform (a product of Alore AI) that lets startups
+  and prosumers build N8N-based AI workflows from natural language, with no coding required. Users
+  describe automations in plain English to generate email sequences, lead categorization and personalized
+  outreach, spin up internal dashboard UIs, and connect 50+ apps including HubSpot, Salesforce, Google
+  Drive, Notion, LinkedIn and Shopify. Osly was surfaced as a portfolio company of 500 Global and added
+  to the API Evangelist network. It publishes a marketing site and a hosted application, but no public
+  developer API, OpenAPI, or developer documentation was found during enrichment.
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://www.osly.ai/favicon.ico
 url: https://raw.githubusercontent.com/api-evangelist/osly/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,9 +28,15 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
+- Artificial Intelligence
+- Workflow Automation
+- No-Code
+- Agents
+- Lead Generation
+- Productivity
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -21,5 +44,20 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/osly-domain-security.yml
 - type: Website
-  url: https://pocketflow.ai
+  url: https://osly.ai/
+- type: SignUp
+  url: https://app.alore.ai/
+- type: Support
+  url: https://discord.gg/HrZutaq46t
+- type: LinkedIn
+  url: https://www.linkedin.com/company/osly-ai
+- type: Twitter
+  url: https://x.com/osly_ai
+x-enrichment:
+  date: '2026-07-20'
+  status: minimal
+  artifacts_added: 2
+  pass: local-v1
