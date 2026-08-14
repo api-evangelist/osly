@@ -5,8 +5,12 @@ description: Osly is an AI workflow automation platform (a product of Alore AI) 
   describe automations in plain English to generate email sequences, lead categorization and personalized
   outreach, spin up internal dashboard UIs, and connect 50+ apps including HubSpot, Salesforce, Google
   Drive, Notion, LinkedIn and Shopify. Osly was surfaced as a portfolio company of 500 Global and added
-  to the API Evangelist network. It publishes a marketing site and a hosted application, but no public
-  developer API, OpenAPI, or developer documentation was found during enrichment.
+  to the API Evangelist network. It publishes no developer portal, no API documentation and no OpenAPI;
+  the only machine-readable description of its API is the company's own first-party TypeScript SDK in
+  github.com/Osly-AI, which documents an X-API-Key REST surface plus a Socket.IO execution stream at
+  api.pocketflow.ai — the company's prior brand domain, since pocketflow.ai redirects to osly.ai. As of
+  2026-08-14 every application and API host in the estate (app.osly.ai, api.osly.ai, api.pocketflow.ai,
+  app.alore.ai) returns Cloudflare 522; only the marketing site and blog respond.
 accessModel:
   pricing: unknown
   onboarding: unknown
@@ -28,7 +32,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-20'
+modified: '2026-08-14'
 tags:
 - Company
 - Artificial Intelligence
@@ -37,7 +41,39 @@ tags:
 - Agents
 - Lead Generation
 - Productivity
-apis: []
+- Integration
+- Low-Code
+apis:
+- name: Osly Workflow API (PocketFlow)
+  description: The workflow list, detail and execution surface behind Osly, as documented by the
+    company's own first-party TypeScript SDK. Two REST reads (GET /workflows, GET /workflows/{id})
+    authenticated with an X-API-Key header carrying a pfl_-prefixed key, plus a Socket.IO channel where
+    a client emits run_workflow and receives run_start / stream_output / node_error / run_complete
+    events. Osly publishes no API reference, no OpenAPI and no changelog for this surface, and the base
+    host currently returns Cloudflare 522 (origin unreachable).
+  humanURL: https://github.com/Osly-AI/Pocketflow-SDK
+  baseURL: https://api.pocketflow.ai
+  tags:
+  - Workflow Automation
+  - Agents
+  - Artificial Intelligence
+  properties:
+  - type: Documentation
+    url: https://github.com/Osly-AI/Pocketflow-SDK#readme
+  - type: SourceCode
+    url: https://github.com/Osly-AI/Pocketflow-SDK
+  - type: Authentication
+    url: authentication/osly-authentication.yml
+  - type: Conventions
+    url: conventions/osly-conventions.yml
+  - type: DataModel
+    url: data-model/osly-data-model.yml
+  - type: ErrorCatalog
+    url: errors/osly-problem-types.yml
+  - type: EventCatalog
+    url: events/osly-workflow-events.yml
+  - type: RateLimits
+    url: rate-limits/osly-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -56,8 +92,62 @@ common:
   url: https://www.linkedin.com/company/osly-ai
 - type: Twitter
   url: https://x.com/osly_ai
+- type: GitHubOrganization
+  url: https://github.com/Osly-AI
+- type: Blog
+  url: https://blog.osly.ai/
+- type: BlogRSS
+  url: https://blog.osly.ai/rss/
+- type: Documentation
+  url: https://github.com/Osly-AI/Pocketflow-SDK#readme
+- type: Packages
+  url: packages/osly-packages.yml
+- type: SDKs
+  url: packages/osly-packages.yml
+- type: CLI
+  url: cli/osly-cli.yml
+- type: Authentication
+  url: authentication/osly-authentication.yml
+- type: Conventions
+  url: conventions/osly-conventions.yml
+- type: DataModel
+  url: data-model/osly-data-model.yml
+- type: ErrorCatalog
+  url: errors/osly-problem-types.yml
+- type: EventCatalog
+  url: events/osly-workflow-events.yml
+- type: Lifecycle
+  url: lifecycle/osly-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/osly-rate-limits.yml
+- type: Plans
+  url: plans/osly-plans-pricing.yml
+- type: Conformance
+  url: conformance/osly-conformance.yml
+- type: LLMsTxt
+  url: llms/osly-llms.txt
 x-enrichment:
-  date: '2026-07-20'
-  status: minimal
-  artifacts_added: 2
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 13
   pass: local-v1
+x-coverage:
+  state: covered
+  reason: covered
+  detail: >-
+    Contract discovery found no OpenAPI, GraphQL, MCP or agent card on any host, but it did find a
+    real first-party contract in the company's own GitHub organization — the Pocketflow SDK, whose
+    source documents the REST paths, X-API-Key scheme, error envelope, pagination and Socket.IO event
+    names now captured as artifacts. The blocking condition is availability, not secrecy: every
+    application and API host (app.osly.ai, api.osly.ai, api.pocketflow.ai, app.alore.ai) answered
+    Cloudflare 522 during this pass.
+  evidence:
+  - url: https://api.pocketflow.ai/
+    status: 522
+  - url: https://app.osly.ai/
+    status: 522
+  - url: https://github.com/Osly-AI/Pocketflow-SDK
+    status: 200
+  - url: https://www.osly.ai/
+    status: 200
+  checked: '2026-08-14'
