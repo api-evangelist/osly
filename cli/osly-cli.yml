@@ -1,0 +1,41 @@
+generated: '2026-08-14'
+method: searched
+source: https://github.com/Osly-AI/Pocketflow-SDK/blob/main/src/cli/index.ts
+name: pocketflow-cli
+binary: pocketflow
+version: 1.0.0
+distribution:
+  method: source
+  install: git clone https://github.com/Osly-AI/Pocketflow-SDK && npm install && npm run build
+  package: null
+  note: >-
+    Declared as `bin: { pocketflow: dist/cli/index.js }` in the SDK package.json, but the
+    package was never published to npm (registry 404), so the binary is only available by
+    building the repository.
+authentication:
+  env: POCKETFLOW_API_KEY
+  flag: -k, --api-key <key>
+  server_env: POCKETFLOW_SERVER_URL
+  default_server: https://api.pocketflow.ai
+commands:
+- name: test-connection
+  description: Test the connection to the PocketFlow server (basic connectivity, then an
+    authenticated call to the workflows endpoint)
+  options:
+  - -k, --api-key <key>
+  - -v, --verbose
+- name: generate
+  description: Generate TypeScript types for workflows from the account's workflow definitions
+  options:
+  - -k, --api-key <key>
+  - -o, --out-dir <dir> (default src/flows)
+  - -v, --verbose
+  - -d, --debug
+examples:
+- npm run examples:twitter
+- npm run examples:youtube2twitter
+notes: >-
+  The CLI's test-connection command probes `<server>/api/workflows` while the SDK's HTTP client
+  calls `<server>/workflows` — the two disagree on whether the REST surface carries an /api
+  prefix. Recorded as observed; not reconciled, because the host is unreachable (522) and the
+  company publishes no API reference to arbitrate.

@@ -1,0 +1,61 @@
+generated: '2026-08-14'
+method: derived
+source: https://github.com/Osly-AI/Pocketflow-SDK/blob/main/src/socket/workflow.ts
+derived_from: first-party SDK source published by Osly
+kind: event-catalog
+not_an_asyncapi_spec: >-
+  Osly publishes no AsyncAPI document and no webhook catalog. This file records the event names
+  and payload fields the company's own SDK declares, as an honest catalog. It is deliberately
+  NOT written as an AsyncAPI document and carries no AsyncAPI or Webhooks pointer in apis.yml,
+  because that would credit Osly with an event specification it has never published.
+transport:
+  protocol: socket.io
+  library: socket.io-client ^4.8.1
+  transports: [polling, websocket]
+  default_url: api.pocketflow.ai
+  status: unreachable
+  probed:
+    url: https://api.pocketflow.ai/
+    http_status: 522
+    checked: '2026-08-14'
+  auth:
+    field: token
+    value: the same pfl_ API key used for REST
+  connection:
+    timeout_ms: 30000
+    reconnection_attempts: 10
+client_to_server:
+- event: run_workflow
+  payload:
+    flowId: string (the workflow id)
+    token: string (API key)
+    input: object (workflow-specific parameters)
+  acknowledgement: optional server ack callback
+server_to_client:
+- event: run_start
+  payload: '{ message: string }'
+- event: run_complete
+  payload: '{ message: string, state: object, warning: boolean, errors?: array, output?: any }'
+  note: Terminal. Workflow output is consolidated here; a former separate final_output event
+    was removed. The SDK auto-disconnects after this event.
+- event: run_warning
+  payload: '{ message: string, errors: array, state: object, warning: boolean }'
+  note: Terminal — the SDK auto-disconnects.
+- event: run_error
+  payload: '{ message: string, stack?: string }'
+  note: Terminal — the SDK auto-disconnects.
+- event: stream_output
+  payload: '{ type: string, node: string, state: any, action: string, isError: boolean }'
+  note: Per-node streaming output during execution.
+- event: node_error
+  payload: '{ node: string, error: any, state: any }'
+- event: workflow_received
+  payload: '{ message?: string }'
+- event: workflow_error
+  payload: '{ message: string, stack?: string }'
+  note: Terminal — the SDK auto-disconnects.
+webhooks:
+  published: false
+  note: >-
+    No webhook subscription surface is documented anywhere on osly.ai, blog.osly.ai, or in the
+    SDK. The event surface is a live client socket, not a callback registration.

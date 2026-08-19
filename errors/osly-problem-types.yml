@@ -1,0 +1,56 @@
+generated: '2026-08-14'
+method: derived
+source: https://github.com/Osly-AI/Pocketflow-SDK/blob/main/src/http/client.ts
+derived_from: first-party SDK error handling; Osly publishes no error reference page
+format: vendor-specific
+rfc9457: false
+envelope:
+  media_type: application/json
+  shape: '{ "error": { "code": string, "message": string, "details"?: string } }'
+  note: >-
+    The client also tolerates a flat string form — `{ "error": "Failed to fetch workflow" }` is
+    special-cased and remapped to a not-found condition — so the envelope is not consistently
+    shaped in practice.
+problems:
+- status: 401
+  title: Authentication failed
+  sdk_error: AuthenticationError
+  remediation: Check the X-API-Key value.
+  source_operation: src/http/client.ts#apiRequest
+- status: 403
+  title: Authentication failed
+  sdk_error: AuthenticationError
+  remediation: Check the X-API-Key value.
+  source_operation: src/http/client.ts#apiRequest
+- status: 404
+  title: Resource not found
+  sdk_error: NotFoundError
+  remediation: Verify the workflow id; also returned when the server 500s with the body
+    "Failed to fetch workflow".
+  source_operation: src/http/client.ts#apiRequest
+- status: 429
+  title: Rate limit exceeded
+  sdk_error: ApiError
+  remediation: Retry later. No Retry-After header is read by the client and no limits are
+    published.
+  source_operation: src/http/client.ts#apiRequest
+client_error_classes:
+- name: ApiError
+  meaning: base class for all API failures
+- name: NotFoundError
+  meaning: 404, or a 500 carrying "Failed to fetch workflow"
+- name: AuthenticationError
+  meaning: 401/403, or a missing API key before the request is sent
+- name: NetworkError
+  meaning: fetch failure or client-side 30s timeout abort
+- name: SocketConnectionError
+  meaning: Socket.IO connection failure or timeout
+- name: WorkflowError
+  meaning: workflow execution failure over the socket surface
+event_errors:
+  see: events/osly-workflow-events.yml
+  events: [run_error, run_warning, node_error, workflow_error]
+gaps:
+- No stable machine-readable error code registry is published; `error.code` exists in the type
+  but no enumeration of its values is documented anywhere public.
+- No application/problem+json, no `type` URI, no error documentation page.

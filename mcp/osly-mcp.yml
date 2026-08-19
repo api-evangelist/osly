@@ -1,0 +1,48 @@
+generated: '2026-08-14'
+method: derived
+status: candidate
+source: https://github.com/Osly-AI/Pocketflow-SDK/blob/main/src/http/client.ts
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: searched
+search_evidence:
+  searched:
+  - npm registry for @osly/*, osly-mcp, pocketflow-mcp — 404
+  - github.com/Osly-AI (13 public repos) — no MCP server for the Osly product
+  - www.osly.ai and blog.osly.ai — no MCP mention
+  - https://www.osly.ai/.well-known/mcp.json — 404
+  false_positive_checked: >-
+    glama.ai lists an "n8n Workflow Builder" MCP server that surfaces in searches for Osly
+    because Osly builds n8n workflows. It is published by an unrelated individual developer
+    (github.com/makafeli/n8n-workflow-builder) and is NOT an Osly server. Not recorded as
+    Osly's.
+  in_org_but_not_a_product_server: >-
+    github.com/Osly-AI/PocketManus contains MCP client and server modules (app/mcp/server.py,
+    run_mcp_server.py). That is the open-source PocketFlow/OpenManus agent framework in Osly's
+    org — it exposes the framework's own agent tools, not the Osly workflow API — so it is not
+    counted as an MCP server for this provider.
+tools:
+- name: list_workflows
+  description: List the workflows in the account, with limit/offset paging, sort and free-text
+    search.
+  source_operation: GET /workflows (src/http/client.ts#listWorkflows)
+  status: candidate
+- name: get_workflow
+  description: Get one workflow, including its node graph and YAML definition.
+  source_operation: GET /workflows/{workflowId} (src/http/client.ts#getWorkflowDetail)
+  status: candidate
+- name: run_workflow
+  description: Execute a workflow with an input object and stream node output until completion.
+  source_operation: socket.io emit run_workflow (src/socket/workflow.ts)
+  status: candidate
+  note: Streaming/long-running; not a REST operation.
+note: >-
+  Nobody ships an MCP server for Osly. These three tools are a DERIVED candidate set, computed
+  from the operations the company's own SDK calls — they are not installable and not reachable.
+  No MCPServer pointer is wired into apis.yml, deliberately: an MCPServer pointer asserts the
+  provider ships an agent surface, and Osly does not. The backing API host itself
+  (api.pocketflow.ai) returns Cloudflare 522.

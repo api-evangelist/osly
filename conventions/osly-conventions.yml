@@ -1,0 +1,76 @@
+generated: '2026-08-14'
+method: derived
+source: https://github.com/Osly-AI/Pocketflow-SDK/blob/main/src/http/client.ts
+derived_from: first-party SDK source published by Osly; no published API reference exists
+base_url: https://api.pocketflow.ai
+auth:
+  style: api-key-header
+  header: X-API-Key
+  see: authentication/osly-authentication.yml
+content_type: application/json
+idempotency:
+  supported: false
+  header: null
+  evidence: >-
+    No idempotency key, retry token, or replay-safety mechanism appears anywhere in the SDK
+    client, the CLI, or the Socket.IO surface. The only write path (run_workflow) is a
+    fire-and-forget socket emit with an optional server acknowledgement — nothing deduplicates
+    a repeated execution.
+pagination:
+  style: limit-offset
+  params:
+    limit:
+      default: 20
+      max: 100
+    offset:
+      default: 0
+  sort:
+    param: sort
+    values: [created_at, updated_at, name]
+    default: created_at
+  order:
+    param: order
+    values: [asc, desc]
+    default: desc
+  search:
+    param: search
+    description: Free text search across workflow name and prompt
+  response_envelope:
+    items_field: workflows
+    meta_field: meta
+    meta_fields: [total, limit, offset]
+field_expansion:
+  supported: false
+metadata:
+  supported: false
+request_id:
+  header: null
+  supported: false
+  note: The SDK logs response headers in verbose mode but reads no correlation/request-id header.
+versioning:
+  scheme: none-observed
+  note: >-
+    No version segment in the paths the SDK calls (/workflows, /workflows/{id}) and no version
+    header. See lifecycle/osly-lifecycle.yml.
+error_envelope:
+  shape: '{ "error": { "code": string, "message": string, "details"?: string } }'
+  format: vendor-specific
+  rfc9457: false
+  see: errors/osly-problem-types.yml
+rate_limit_signal:
+  status_on_exhaustion: 429
+  headers: []
+  note: >-
+    The SDK handles HTTP 429 explicitly ("Rate limit exceeded. Please try again later.") but
+    reads no RateLimit-*/X-RateLimit-*/Retry-After header, and no limits are published.
+    See rate-limits/osly-rate-limits.yml.
+timeouts:
+  default_ms: 30000
+  mechanism: client-side AbortController
+event_surface:
+  transport: socket.io
+  see: events/osly-workflow-events.yml
+path_prefix_inconsistency: >-
+  The SDK HTTP client calls /workflows; the CLI's test-connection command calls /api/workflows.
+  Both ship in the same package. Recorded, not resolved — the host is unreachable and there is
+  no API reference to arbitrate.

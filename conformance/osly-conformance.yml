@@ -1,0 +1,56 @@
+generated: '2026-08-14'
+method: derived
+source: https://github.com/Osly-AI/Pocketflow-SDK (SDK source) + live probes of osly.ai,
+  api.pocketflow.ai, blog.osly.ai
+standards:
+- id: oauth2
+  conforms: false
+  evidence: API auth is a static X-API-Key header; no OAuth flow is exposed to API consumers.
+    (The product markets OAuth connections to third-party SaaS, but that is Osly acting as a
+    client, not as an authorization server.)
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on every Osly host probed.
+- id: rfc8414-oauth-authorization-server
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server 404 on every host probed.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'Errors use a vendor envelope { error: { code, message, details } }; no
+    application/problem+json.'
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt 404 on www.osly.ai, pocketflow.ai and blog.osly.ai.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No deprecation or sunset signalling anywhere in the SDK or on the site.
+- id: rfc9727-api-catalog
+  conforms: false
+  evidence: /.well-known/api-catalog 404 on every host probed.
+- id: openapi
+  conforms: false
+  evidence: No OpenAPI/Swagger document at any probed location on osly.ai, pocketflow.ai,
+    api.pocketflow.ai, app.osly.ai, blog.osly.ai, or in the GitHub organization.
+- id: asyncapi
+  conforms: false
+  evidence: A Socket.IO event surface exists (events/osly-workflow-events.yml) but no AsyncAPI
+    document is published.
+- id: mcp
+  conforms: false
+  evidence: No MCP server is published for the Osly product. (PocketManus, in the same GitHub
+    org, embeds an MCP client/server for the open-source agent framework — it is not an Osly
+    product API server.)
+- id: a2a
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json 404 on every host probed.
+- id: pagination-limit-offset
+  conforms: true
+  evidence: GET /workflows accepts limit/offset/sort/order and returns meta{total,limit,offset}.
+- id: idempotency
+  conforms: false
+  evidence: No idempotency key or replay-safety mechanism in any surface.
+compliance_program:
+  published: false
+  certifications: []
+  evidence: No trust center, no SOC 2 / ISO 27001 / GDPR / HIPAA claim found on osly.ai or
+    blog.osly.ai; probe-security-programs.py returned vdp=none trust=none.

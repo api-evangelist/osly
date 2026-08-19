@@ -1,0 +1,50 @@
+generated: '2026-08-14'
+method: derived
+source: https://github.com/Osly-AI/Pocketflow-SDK/blob/main/src/http/client.ts
+derived_from: first-party SDK source published by Osly (github.com/Osly-AI); no OpenAPI or
+  developer documentation exists to derive from
+summary:
+  types: [apiKey]
+  api_key_in: [header]
+  oauth2_flows: []
+  oidc: false
+  mutual_tls: false
+schemes:
+- name: ApiKeyHeader
+  type: apiKey
+  in: header
+  parameter_name: X-API-Key
+  required: true
+  source: src/http/client.ts buildAuthHeaders()
+  note: >-
+    The SDK throws AuthenticationError("Authentication required: Please provide an API key")
+    before any request when no key is set — the REST surface has no anonymous mode.
+- name: SocketToken
+  type: apiKey
+  in: body
+  parameter_name: token
+  required: true
+  source: src/socket/connect.ts, src/socket/workflow.ts
+  note: >-
+    The Socket.IO surface carries the same key as a `token` field, both in the connection
+    options and again inside the run_workflow payload.
+key_format:
+  prefix: pfl_
+  source: https://github.com/Osly-AI/Pocketflow-SDK#readme (".env" example shows
+    POCKETFLOW_API_KEY=pfl_your_api_key)
+key_issuance:
+  console: https://platform.pocketflow.ai/settings/api
+  status: unreachable
+  note: >-
+    The README directs users to the PocketFlow dashboard settings page to mint a key.
+    platform.pocketflow.ai 301-redirects to app.osly.ai, which returns Cloudflare 522, so no
+    key can currently be issued.
+failure_modes:
+- status: 401
+  meaning: authentication failed — key missing or invalid
+- status: 403
+  meaning: authentication failed — key rejected
+docs: null
+docs_note: >-
+  Osly publishes no authentication documentation page. This profile is derived entirely from
+  the company's own SDK source; nothing here was invented.

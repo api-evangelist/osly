@@ -1,0 +1,57 @@
+generated: '2026-08-14'
+method: searched
+source: https://github.com/Osly-AI/Pocketflow-SDK
+ownership_note: >-
+  The SDK is published under Osly's own GitHub organization (github.com/Osly-AI, org name
+  "Osly", org blog https://alpha.osly.ai/) and targets https://api.pocketflow.ai. That host is
+  on the company's prior brand domain: https://pocketflow.ai 301-redirects to https://osly.ai,
+  and https://platform.pocketflow.ai 301-redirects to https://app.osly.ai — so the PocketFlow
+  namespace is Osly's own earlier identity, not a third party's.
+registries_probed:
+- registry: npm
+  queries: [pocketflow-sdk, pocketflow-framework, '@pocketflow/sdk', osly, osly-sdk, '@osly/sdk']
+  result: 404 on every Osly-authored name
+- registry: pypi
+  queries: [osly, pocketflow-sdk]
+  result: 404
+- registry: rubygems
+  queries: [osly]
+  result: not published
+- registry: crates.io
+  queries: [osly]
+  result: not published
+packages:
+- language: typescript
+  registry: github
+  name: pocketflow-sdk
+  url: https://github.com/Osly-AI/Pocketflow-SDK
+  install: git clone https://github.com/Osly-AI/Pocketflow-SDK && npm install
+  official: true
+  license: Apache-2.0
+  version: 1.0.0
+  published: null
+  version_source: package.json in the repository (no registry release exists)
+  last_commit: '2025-03-12'
+  covers:
+  - REST client (X-API-Key) for GET /workflows and GET /workflows/{workflowId}
+  - Socket.IO client for the run_workflow execution stream
+  - a `pocketflow` CLI binary (see cli/osly-cli.yml)
+  note: >-
+    Source-only distribution. The package declares name "pocketflow-sdk" v1.0.0 with a bin
+    entry, but registry.npmjs.org/pocketflow-sdk returns 404 — it was never published, and the
+    README instructs consumers to clone the repository and import from a local path. Last
+    commit 2025-03-12; the API host it targets (api.pocketflow.ai) currently answers Cloudflare
+    522, so the client is dated relative to a product surface that is itself unreachable.
+not_ours:
+- name: pocketflow
+  registry: npm
+  url: https://www.npmjs.com/package/pocketflow
+  version: 1.0.4
+  published: '2025-03-30'
+  owner: The-Pocket (github.com/The-Pocket/PocketFlow-Typescript)
+  reason: >-
+    Name collision only. This npm package and the PyPI `pocketflow` package (0.0.3, author
+    Zachary Huang) belong to the separate open-source Pocket Flow project, NOT to Osly. Osly's
+    own TypeScript framework repo (github.com/Osly-AI/Pocket-Flow-Framework) declares the same
+    package name locally but has no matching registry release. Recorded here so a later pass
+    does not misattribute these releases to Osly.

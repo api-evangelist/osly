@@ -1,0 +1,49 @@
+generated: '2026-08-14'
+method: searched
+source: https://www.osly.ai/ + https://blog.osly.ai/ + https://github.com/Osly-AI
+versioning:
+  scheme: none-observed
+  current: null
+  docs: null
+  note: The SDK calls unversioned paths (/workflows) with no version header.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  probed:
+  - { url: 'https://status.osly.ai/', status: 000, note: DNS does not resolve }
+  - { url: 'https://osly.statuspage.io/', status: 200, note: 'unclaimed — redirects to
+      atlassian.com/software/statuspage marketing, not a status page' }
+changelog:
+  url: null
+  note: >-
+    The osly.ai footer renders a "Changelog" link, but its href is "#" — a dead placeholder.
+    The same is true of "Terms and Conditions" and "Privacy Policy". No changelog page exists.
+availability:
+  observed: '2026-08-14'
+  finding: >-
+    Every application and API host in the company's estate answered Cloudflare 522 (origin
+    unreachable) during this pass, while the marketing site and blog were healthy. The product
+    surface appears to be down, not merely undocumented.
+  probes:
+  - { url: 'https://app.osly.ai/', status: 522 }
+  - { url: 'https://api.osly.ai/', status: 522 }
+  - { url: 'https://api.pocketflow.ai/', status: 522 }
+  - { url: 'https://app.alore.ai/', status: 522 }
+  - { url: 'https://platform.pocketflow.ai/', status: 301, note: redirects to app.osly.ai (522) }
+  - { url: 'https://alpha.osly.ai/', status: 000, note: DNS does not resolve; still advertised
+      as the org URL on github.com/Osly-AI }
+  - { url: 'https://www.osly.ai/', status: 200 }
+  - { url: 'https://blog.osly.ai/', status: 200 }
+activity:
+  last_blog_post: '2025-07-30'
+  last_blog_post_source: https://blog.osly.ai/sitemap-posts.xml
+  last_sdk_commit: '2025-03-12'
+  marketing_site_lastmod: '2025-01-27'
+  marketing_site_lastmod_source: https://www.osly.ai/sitemap.xml
+  github_org_repos_last_pushed: '2026-07-31'

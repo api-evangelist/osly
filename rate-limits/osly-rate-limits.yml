@@ -1,0 +1,24 @@
+generated: '2026-08-14'
+method: derived
+source: https://github.com/Osly-AI/Pocketflow-SDK/blob/main/src/http/client.ts
+limit_count: 0
+limits: []
+exhaustion:
+  status_code: 429
+  evidence: >-
+    The SDK's apiRequest() switch handles HTTP 429 explicitly and raises
+    ApiError("Rate limit exceeded. Please try again later."), so the API does enforce limits.
+response_headers: []
+response_headers_note: >-
+  The client reads no RateLimit-*, X-RateLimit-*, or Retry-After header — it logs the full
+  header set only in verbose mode and never parses one — so no runtime rate-limit signal is
+  available to a consumer or an agent.
+client_timeout_ms: 30000
+note: >-
+  No numeric limit, window, burst, or per-key/per-account scope is published anywhere. Osly has
+  no developer documentation, and the only evidence limits exist at all is the SDK's 429
+  branch. Recording an honest zero: the API rate-limits, but the numbers are undocumented and
+  the signal is unreadable. Could not be observed live either — api.pocketflow.ai returns
+  Cloudflare 522.
+probes:
+- { url: 'https://api.pocketflow.ai/', status: 522, checked: '2026-08-14' }

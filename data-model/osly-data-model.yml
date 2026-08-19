@@ -1,0 +1,66 @@
+generated: '2026-08-14'
+method: derived
+source: https://github.com/Osly-AI/Pocketflow-SDK/blob/main/src/http/client.ts
+derived_from: TypeScript interfaces in the company's own SDK (no OpenAPI or object reference is
+  published)
+entities:
+- name: Workflow
+  aliases: [WorkflowSummary, WorkflowDetail]
+  id_field: id
+  id_format: string (format not documented; no prefix observed)
+  fields:
+  - { name: id, type: string }
+  - { name: name, type: string }
+  - { name: prompt, type: string, note: the natural-language description the workflow was
+      generated from }
+  - { name: created_at, type: string (timestamp) }
+  - { name: updated_at, type: string (timestamp) }
+  - { name: execution_count, type: integer }
+  - { name: last_executed_at, type: string (timestamp) | null }
+  - { name: yaml_path, type: string, scope: detail-only }
+  - { name: yaml, type: string, scope: detail-only, note: the workflow definition itself }
+  - { name: nodes, type: 'WorkflowNode[]', scope: detail-only }
+  operations:
+  - GET /workflows
+  - GET /workflows/{workflowId}
+  note: >-
+    The detail response is inconsistent — it may also nest an alternative `workflow` object
+    carrying camelCase twins of the same fields (id, name, yamlPath, prompt, yamlContent). The
+    SDK defends against both shapes.
+- name: WorkflowNode
+  id_field: id
+  fields:
+  - { name: id, type: string }
+  - { name: name, type: string }
+  - { name: type, type: string }
+  note: An atomic step in a workflow graph (the framework models flows as nested directed
+    graphs).
+- name: WorkflowRun
+  persisted: unknown
+  fields:
+  - { name: flowId, type: string, note: references Workflow.id }
+  - { name: input, type: object }
+  - { name: state, type: object }
+  - { name: output, type: any }
+  note: >-
+    Not a REST resource — a run exists only as the Socket.IO run_workflow exchange. There is no
+    documented endpoint to list, fetch, or cancel an execution.
+- name: PaginationMeta
+  fields:
+  - { name: total, type: integer }
+  - { name: limit, type: integer }
+  - { name: offset, type: integer }
+relationships:
+- from: Workflow
+  to: WorkflowNode
+  type: has_many
+  via: nodes
+- from: WorkflowRun
+  to: Workflow
+  type: belongs_to
+  via: flowId
+gaps:
+- No user, account, team, credential, or connection entity is exposed, despite the product
+  advertising OAuth-managed connections to 50+ applications.
+- No execution/run history resource, though Workflow carries execution_count and
+  last_executed_at.

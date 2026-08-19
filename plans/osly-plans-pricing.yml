@@ -1,0 +1,15 @@
+generated: '2026-08-14'
+method: searched
+source: https://www.osly.ai/
+plan_count: 0
+plans: []
+note: >-
+  Osly publishes no pricing at all. The marketing site is a single page (its sitemap.xml
+  contains exactly one URL) with no /pricing route — https://www.osly.ai/pricing returns 404 —
+  and no plan, tier, quota, or "contact sales" pricing language appears anywhere on it. The
+  only call to action is "Start Building Now", which links to https://app.alore.ai/ (Cloudflare
+  522). blog.osly.ai carries no pricing page either.
+probes:
+- { url: 'https://www.osly.ai/pricing', status: 404 }
+- { url: 'https://www.osly.ai/sitemap.xml', status: 200, note: one URL only }
+- { url: 'https://app.alore.ai/', status: 522 }
