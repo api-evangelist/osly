@@ -36,6 +36,16 @@ modified: '2026-08-14'
 tags:
 - Company
 - Artificial Intelligence
+- Workflow-Automation
+- No-Code
+- Agents
+- Lead Generation
+- Productivity
+- Integration
+- Low-Code
+tags_raw:
+- Company
+- Artificial Intelligence
 - Workflow Automation
 - No-Code
 - Agents
@@ -54,6 +64,10 @@ apis:
   humanURL: https://github.com/Osly-AI/Pocketflow-SDK
   baseURL: https://api.pocketflow.ai
   tags:
+  - Workflow-Automation
+  - Agents
+  - Artificial Intelligence
+  tags_raw:
   - Workflow Automation
   - Agents
   - Artificial Intelligence
