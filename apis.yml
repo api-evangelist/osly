@@ -11,6 +11,18 @@ description: Osly is an AI workflow automation platform (a product of Alore AI) 
   api.pocketflow.ai — the company's prior brand domain, since pocketflow.ai redirects to osly.ai. As of
   2026-08-14 every application and API host in the estate (app.osly.ai, api.osly.ai, api.pocketflow.ai,
   app.alore.ai) returns Cloudflare 522; only the marketing site and blog respond.
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: unknown
