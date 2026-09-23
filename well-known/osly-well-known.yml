@@ -7,95 +7,75 @@ hosts_probed:
 - https://blog.osly.ai
 - https://api.pocketflow.ai
 - https://app.osly.ai
-documents:
-- host: https://www.osly.ai
-  path: /.well-known/security.txt
-  status: 404
-- host: https://www.osly.ai
-  path: /.well-known/openid-configuration
-  status: 404
-- host: https://www.osly.ai
-  path: /.well-known/oauth-authorization-server
-  status: 404
-- host: https://www.osly.ai
-  path: /.well-known/oauth-protected-resource
-  status: 404
-- host: https://www.osly.ai
-  path: /.well-known/api-catalog
-  status: 404
-- host: https://www.osly.ai
-  path: /.well-known/ai-plugin.json
-  status: 404
-- host: https://www.osly.ai
-  path: /.well-known/agent-card.json
-  status: 404
-- host: https://www.osly.ai
-  path: /.well-known/agent.json
-  status: 404
-- host: https://www.osly.ai
-  path: /.well-known/mcp.json
-  status: 404
-- host: https://pocketflow.ai
-  path: /.well-known/security.txt
-  status: 404
-- host: https://pocketflow.ai
-  path: /.well-known/openid-configuration
-  status: 404
-- host: https://pocketflow.ai
-  path: /.well-known/oauth-authorization-server
-  status: 404
-- host: https://pocketflow.ai
-  path: /.well-known/api-catalog
-  status: 404
-- host: https://pocketflow.ai
-  path: /.well-known/ai-plugin.json
-  status: 404
-- host: https://pocketflow.ai
-  path: /.well-known/agent-card.json
-  status: 404
-- host: https://pocketflow.ai
-  path: /.well-known/agent.json
-  status: 404
-- host: https://blog.osly.ai
-  path: /.well-known/security.txt
-  status: 404
-- host: https://blog.osly.ai
-  path: /.well-known/openid-configuration
-  status: 404
-- host: https://blog.osly.ai
-  path: /.well-known/oauth-authorization-server
-  status: 404
-- host: https://blog.osly.ai
-  path: /.well-known/api-catalog
-  status: 404
-- host: https://blog.osly.ai
-  path: /.well-known/ai-plugin.json
-  status: 404
-- host: https://blog.osly.ai
-  path: /.well-known/agent-card.json
-  status: 404
-- host: https://blog.osly.ai
-  path: /.well-known/agent.json
-  status: 404
-- host: https://api.pocketflow.ai
-  path: /.well-known/oauth-authorization-server
-  status: 522
-  note: host origin unreachable — every path on this host returns Cloudflare 522
-- host: https://api.pocketflow.ai
-  path: /.well-known/agent-card.json
-  status: 522
-- host: https://app.osly.ai
-  path: /
-  status: 522
 llms_txt:
   probed:
-  - { url: 'https://www.osly.ai/llms.txt', status: 404 }
-  - { url: 'https://pocketflow.ai/llms.txt', status: 404 }
-  - { url: 'https://blog.osly.ai/llms.txt', status: 200, verdict: 'not a document — the Ghost
-      blog answers 200 with the HTML homepage shell (20,232 bytes, text/html) for this path;
-      treated as a miss' }
-notes: >-
-  No /.well-known/ discovery document is served on any Osly host. No WellKnown or SecurityTxt
-  pointer is wired into apis.yml, because every probe missed — this file records a verified
-  absence, not a surface.
+  - url: https://www.osly.ai/llms.txt
+    status: 404
+  - url: https://pocketflow.ai/llms.txt
+    status: 404
+  - url: https://blog.osly.ai/llms.txt
+    status: 200
+    verdict: not a document — the Ghost blog answers 200 with the HTML homepage shell (20,232 bytes, text/html)
+      for this path; treated as a miss
+notes: No /.well-known/ discovery document is served on any Osly host. No WellKnown or SecurityTxt pointer
+  is wired into apis.yml, because every probe missed — this file records a verified absence, not a surface.
 checked: '2026-08-14'
+hosts:
+- host: ''
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 522
+    note: host origin unreachable — every path on this host returns Cloudflare 522
+  - path: /.well-known/agent-card.json
+    status: 522
+x-shape-fix:
+  converted: '2026-08-20'
+  from: documents
+  note: Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A served
+    .well-known surface recorded in any other shape scores as absent.
