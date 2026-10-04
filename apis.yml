@@ -12,16 +12,19 @@ description: Osly is an AI workflow automation platform (a product of Alore AI) 
   2026-08-14 every application and API host in the estate (app.osly.ai, api.osly.ai, api.pocketflow.ai,
   app.alore.ai) returns Cloudflare 522; only the marketing site and blog respond.
 deliveryModel:
-  model: unknown
+  model: saas
+  license_evidence:
+    not_product:
+    - osly-ai/pocketflow-sdk
   open_source: unknown
   commercial: true
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: unknown
@@ -48,7 +51,7 @@ modified: '2026-08-14'
 tags:
 - Company
 - Artificial Intelligence
-- Workflow-Automation
+- Workflow Automation
 - No-Code
 - Agents
 - Lead Generation
@@ -65,6 +68,7 @@ tags_raw:
 - Productivity
 - Integration
 - Low-Code
+- Workflow-Automation
 apis:
 - name: Osly Workflow API (PocketFlow)
   description: The workflow list, detail and execution surface behind Osly, as documented by the
@@ -76,13 +80,14 @@ apis:
   humanURL: https://github.com/Osly-AI/Pocketflow-SDK
   baseURL: https://api.pocketflow.ai
   tags:
-  - Workflow-Automation
+  - Workflow Automation
   - Agents
   - Artificial Intelligence
   tags_raw:
   - Workflow Automation
   - Agents
   - Artificial Intelligence
+  - Workflow-Automation
   properties:
   - type: Documentation
     url: https://github.com/Osly-AI/Pocketflow-SDK#readme
